@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>The Little Chord Chart</title>
+    <link href='http://fonts.googleapis.com/css?family=Lobster+Two|Bowlby+One+SC|Swanky+and+Moo+Moo' rel='stylesheet' type='text/css'>
+    <link href='css/style.css' rel='stylesheet' type='text/css'>
+
+    <script src="js/support/jquery-1.6.2.min.js"></script>
+    <script src="js/support/raphael-min.js"></script>
+
+    <script src="js/chord.js"></script>
+    <script src="js/chart.js"></script>
+
+<script>
+
+function init() {
+  var container = $("#container");
+
+  for (var i = 0; i < chord_chart.length; ++i) {
+    var section_struct = chord_chart[i];
+    var section = createSectionElement(section_struct);
+
+    for (var j = 0; j < section_struct.chords.length; ++j) {
+      section.append(createChordElement(section_struct.chords[j]));
+    }
+
+    container.append(section);
+  }
+}
+
+$(function() { init() });
+
+</script>
+</head>
+
+<body>
+  <div id="wrapper">
+
+  <center>
+    <h1>The Little Chord Chart</h1>
+    <div>a <a href="http://vexflow.com">VexFlow</a> demo </a>by <a href="http://0xfe.blogspot.com">0xfe</a></div>
+  </center>
+
+  <div id="container"></div>
+
+  <div style="clear:left; padding-top: 50px;">
+    <center><a href="http://0xfe.blogspot.com">0xfe.blogspot.com</a></center>
+  </div>
+</div>
+</center>
+</body>
+</html>

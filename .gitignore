@@ -1,0 +1,9 @@
+ruby_sess.*
+.*.swp
+.hi
+.[oa]
+*.pyc
+.svn
+.class
+# except foo.o which is hand maintained
+!foo.o

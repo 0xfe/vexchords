@@ -1,0 +1,57 @@
+body {
+  background: white;
+  font-family: 'Lobster Two', cursivs;
+  font-size: 18px;
+  color: #222222;
+  margin: auto 0px;
+}
+
+a { text-decoration: none; color: green; padding-bottom: 3px; border-bottom: dotted green 2px }
+a:link {text-decoration: none; color: green}
+a:visited {text-decoration: none; color: green}
+a:active {text-decoration: none; color: #369}
+a:hover {text-decoration: none; color: #369}
+
+#wrapper {
+  font-size: 18px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  display: block;
+  padding: 20px;
+  width: 90%;
+}
+
+h1 {
+  color: black;
+  font-family: "Bowlby One SC", sans-serif;
+  font-size: 36px;
+  margin-bottom: 2px;
+}
+
+.chord { float: left; padding-top: 8px;}
+.chordname {
+  width: 80%;
+  margin: auto;
+  font-family: "Lobster Two", cursive;
+  font-size: 20px;
+  text-align: center;
+}
+
+.section {
+  padding-top: 30px;
+  clear: left;
+}
+
+.section .title {
+  color: black;
+  font-size: 30px;
+}
+.section .description {
+  color: #444444;
+  font-family: 'Swanky and Moo Moo', cursive;
+  font-size: 22px;
+}
+
+p { padding: 10px; }
+
