@@ -9,8 +9,8 @@ body {
 a { text-decoration: none; color: green; padding-bottom: 3px; border-bottom: dotted green 2px }
 a:link {text-decoration: none; color: green}
 a:visited {text-decoration: none; color: green}
-a:active {text-decoration: none; color: #369}
-a:hover {text-decoration: none; color: #369}
+a:active {text-decoration: none; color: #003300}
+a:hover {text-decoration: none; color: #003300}
 
 #wrapper {
   font-size: 18px;
@@ -27,6 +27,7 @@ h1 {
   font-family: "Bowlby One SC", sans-serif;
   font-size: 36px;
   margin-bottom: 2px;
+  margin-top: 2px;
 }
 
 .chord { float: left; padding-top: 8px;}
@@ -52,6 +53,16 @@ h1 {
   font-family: 'Swanky and Moo Moo', cursive;
   font-size: 22px;
 }
+
+.topbar {
+  float: right;
+  padding: 8px;
+  background: #dfd;
+  border-bottom: solid green;
+  border-left: solid green;
+}
+
+.topbar a { border: solid green 0px; }
 
 p { padding: 10px; }
 
