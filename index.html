@@ -12,6 +12,23 @@
 
 <script>
 
+function createShapeChart(keys, container, shapes, shape) {
+  for (var i = 0; i < keys.length; ++i) {
+    var key = keys[i];
+    var section = createSectionElement({
+      section: key + " Chords (" + shape + " Shape)",
+      description: shape + "-Shaped barre chords in the key of " + key + "." });
+
+    for (var j = 0; j < shapes.length; ++j) {
+      var chord_elem = createChordElement(
+        createChordStruct(key, shape, shapes[j]));
+      section.append(chord_elem);
+    }
+
+    container.append(section);
+  }
+}
+
 function init() {
   var container = $("#container");
 
@@ -25,6 +42,15 @@ function init() {
 
     container.append(section);
   }
+
+  var keys_E = ["F", "F#", "Gb", "G", "G#", "A", "A#", "Bb", "C"];
+  var keys_A = ["C#", "Db", "D", "D#", "Eb", "F", "F#", "Gb", "G"];
+
+  var shapes_E = ["M E", "m E", "7 E", "m7 E", "sus4 E", "7sus4 E", "13 E"];
+  var shapes_A = ["M A", "m A", "7 A", "m7 A", "sus4 A", "9 A", "13 A"];
+
+  createShapeChart(keys_E, container, shapes_E, "E");
+  createShapeChart(keys_A, container, shapes_A, "A");
 }
 
 $(function() { init() });
@@ -44,6 +70,10 @@ $(function() { init() });
   </center>
 
   <div id="container"></div>
+
+  <div style="clear:left; padding-top: 70px; font-size: 15px;">
+    <center>Comments? Criticism? Contact me at <a href="http://0xfe.blogspot.com">0xfe.blogspot.com</a>.</center>
+  </div>
 
 </div>
 </center>

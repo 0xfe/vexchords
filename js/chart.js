@@ -100,26 +100,151 @@ var chord_chart = [
       bars: []
     },
     ]
-  },
-  {
-    section: "Fifth Position Chords",
-    description: "These minor chords are generally played with a " +
-                 "first-finger barre on the fifth fret.",
-    chords: [
-    {
-      name: "Dm7",
-      chord: [[2, 2], [4, 3], [6, "x"]],
-      position: 5,
-      bars: [{from_string: 5, to_string: 1, fret: 1}]
-    },
-    {
-      name: "A Major",
-      chord: [[1, 1], [2, 1], [3, 2], [4, 3], [5, 3], [6, 1]],
-      position: 5,
-      bars: []
-    }]
   }
 ];
+
+chord_shapes = {
+  "M E": {
+    name: "Major",
+    chord: [[3, 2], [4, 3], [5, 3]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "m E": {
+    name: "Minor",
+    chord: [[4, 3], [5, 3]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "7 E": {
+    name: "7",
+    chord: [[2, 4], [3, 2], [5, 3]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "m7 E": {
+    name: "m7",
+    chord: [[2, 4], [5, 3]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "M7 E": {
+    name: "Maj7",
+    chord: [[3, 2], [4, 3], [5, 3]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "sus4 E": {
+    name: "sus4",
+    chord: [[3, 3], [4, 3], [5, 3]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "7sus4 E": {
+    name: "7sus4",
+    chord: [[3, 3], [5, 3]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "13 E": {
+    name: "13",
+    chord: [[3, 2], [4, 3], [5, 3]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "M A": {
+    name: "Major",
+    chord: [[2, 3], [3, 3], [4, 3], [6, "x"]],
+    bars: [{from_string: 5, to_string: 1, fret: 1}]
+  },
+  "m A": {
+    name: "Minor",
+    chord: [[2, 2], [3, 3], [4, 3], [6, "x"]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "7 A": {
+    name: "7",
+    chord: [[2, 3], [4, 3], [6, "x"]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "m7 A": {
+    name: "m7",
+    chord: [[2, 2], [4, 3], [6, "x"]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "M7 A": {
+    name: "Maj7",
+    chord: [[2, 3], [3, 2], [4, 3], [6, "x"]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "sus4 A": {
+    name: "sus4",
+    chord: [[2, 3], [3, 3], [4, 4], [6, "x"]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "7sus4 A": {
+    name: "7sus4",
+    chord: [[2, 3], [4, 4], [6, "x"]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "9 A": {
+    name: "9",
+    chord: [[1, "x"], [2, 2], [3, 2], [4, 1], [5, 2], [6, "x"]],
+    position_text: 1
+  },
+  "13 A": {
+    name: "13",
+    chord: [[3, 2], [4, 3], [5, 3]],
+    bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+};
+
+positions = {
+  "E": {
+    "A":  5,
+    "A#": 6,
+    "Bb": 6,
+    "B":  7,
+    "C":  8,
+    "C#": 9,
+    "Db": 9,
+    "D":  10,
+    "D#": 11,
+    "Eb": 11,
+    "E":  12,
+    "F":  1,
+    "F#": 2,
+    "Gb": 2,
+    "G":  3,
+    "G#": 4,
+    "Ab": 4
+  },
+  "A": {
+    "A":  12,
+    "A#": 1,
+    "Bb": 1,
+    "B":  2,
+    "C":  3,
+    "C#": 4,
+    "Db": 4,
+    "D":  5,
+    "D#": 6,
+    "Eb": 6,
+    "E":  7,
+    "F":  8,
+    "F#": 9,
+    "Gb": 9,
+    "G":  10,
+    "G#": 11,
+    "Ab": 11
+  }
+};
+
+function createChordStruct(key, string, shape) {
+  var string = string.toUpperCase();
+  var position = positions[string][key];
+  var struct = chord_shapes[shape];
+
+  return {
+    name: key + struct.name,
+    chord: struct.chord,
+    position: position,
+    position_text: struct.position_text,
+    bars: struct.bars
+  }
+}
 
 function createChordElement(chord_struct) {
   var chordbox = $('<div>').addClass('chord');
@@ -133,7 +258,11 @@ function createChordElement(chord_struct) {
   var paper = Raphael(chordcanvas[0], 150, 140);
   var chord = new ChordBox(paper, 30, 30);
 
-  chord.setChord(chord_struct.chord, chord_struct.position, chord_struct.bars);
+  chord.setChord(
+      chord_struct.chord,
+      chord_struct.position,
+      chord_struct.bars,
+      chord_struct.position_text);
   chord.draw();
 
   return chordbox;

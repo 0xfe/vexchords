@@ -24,6 +24,7 @@ ChordBox = function(paper, x, y, width, height) {
   this.metrics = {
     circle_radius: this.width / 24,
     text_shift_x: this.width / 25,
+    text_shift_y: this.height / 25,
     font_size: this.width / 8,
     bar_shift_x: this.width / 24,
     bridge_stroke_width: 3,
@@ -35,6 +36,7 @@ ChordBox = function(paper, x, y, width, height) {
 
   // Content
   this.position = 0;
+  this.position_text = 0;
   this.chord = [];
   this.bars = [];
 }
@@ -45,10 +47,16 @@ ChordBox.prototype.setNumFrets = function(num_frets) {
   return this;
 }
 
-ChordBox.prototype.setChord = function(chord, position, bars) {
+ChordBox.prototype.setChord = function(chord, position, bars, position_text) {
   this.chord = chord;
   this.position = position || 0;
+  this.position_text = position_text || 0;
   this.bars = bars || [];
+  return this;
+}
+
+ChordBox.prototype.setPositionText = function(position) {
+  this.position_text = position;
   return this;
 }
 
@@ -57,7 +65,7 @@ ChordBox.prototype.draw = function() {
   var fret_spacing = this.fret_spacing;
 
   // Draw guitar bridge
-  if (this.position == 0) {
+  if (this.position <= 1) {
     this.paper.vexLine(this.x, this.y - 1,
                        this.x + (spacing * (this.num_strings - 1)),
                        this.y - 1).
@@ -65,7 +73,9 @@ ChordBox.prototype.draw = function() {
   } else {
     // Draw position number
     this.paper.text(this.x - (this.spacing / 2) - this.metrics.text_shift_x,
-                    this. y + (this.fret_spacing / 2),
+                    this. y + (this.fret_spacing / 2) +
+                    this.metrics.text_shift_y +
+                    (this.fret_spacing * this.position_text),
                     this.position).attr("font-size", this.metrics.font_size);
   }
 
