@@ -34,7 +34,7 @@ h1 {
 .chordname {
   width: 80%;
   margin: auto;
-  font-family: "Lobster Two", cursive;
+  font-family: "Marvel", cursive;
   font-size: 20px;
   text-align: center;
 }
@@ -46,11 +46,14 @@ h1 {
 
 .section .title {
   color: black;
+  font-family: "Marvel", cursive;
+  font-weight: bold;
   font-size: 30px;
 }
 .section .description {
   color: #444444;
-  font-family: 'Swanky and Moo Moo', cursive;
+  font-family: "Marvel", cursive;
+  /* font-family: 'Swanky and Moo Moo', cursive;*/
   font-size: 22px;
 }
 
