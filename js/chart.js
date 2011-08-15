@@ -1,3 +1,10 @@
+/*
+ * Vex Guitar Chord Chart Renderer.
+ * Mohit Muthanna Cheppudira -- http://0xfe.blogspot.com
+ *
+ * Requires: chord.js
+ * Requires: Raphael JS (raphaeljs.com)
+ */
 var chord_chart = [
   { section: "Open Chords",
     description: "These chords are played in open position, and generally " +
@@ -152,8 +159,8 @@ chord_shapes = {
   },
   "13 E": {
     name: "13",
-    chord: [[3, 2], [4, 3], [5, 3]],
-    bars: [{from_string: 6, to_string: 1, fret: 1}]
+    chord: [[1, "x"], [2, 4], [3, 3], [4, 2], [5, "x"], [6, 2]],
+    position_text: 1
   },
   "M A": {
     name: "Major",
@@ -315,5 +322,22 @@ function createSectionElement(section_struct) {
   section_desc.append(section_struct.description);
 
   return section;
+}
+
+function createShapeChart(keys, container, shapes, shape) {
+  for (var i = 0; i < keys.length; ++i) {
+    var key = keys[i];
+    var section = createSectionElement({
+      section: key + " Chords (" + shape + " Shape)",
+      description: shape + "-Shaped barre chords in the key of " + key + "." });
+
+    for (var j = 0; j < shapes.length; ++j) {
+      var chord_elem = createChordElement(
+        createChordStruct(key, shape, shapes[j]));
+      section.append(chord_elem);
+    }
+
+    container.append(section);
+  }
 }
 

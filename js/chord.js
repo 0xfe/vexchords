@@ -119,10 +119,18 @@ ChordBox.prototype.draw = function() {
 
 ChordBox.prototype.lightUp = function(string_num, fret_num) {
   string_num = this.num_strings - string_num;
+
+  var shift_position = 0;
+  if (this.position == 1 && this.position_text == 1) {
+    shift_position = this.position_text;
+  }
+
   var mute = false;
   if (fret_num == "x") {
     fret_num = 0;
     mute = true;
+  } else {
+    fret_num -= shift_position;
   }
 
   var x = this.x + (this.spacing * string_num);
@@ -140,6 +148,10 @@ ChordBox.prototype.lightUp = function(string_num, fret_num) {
 }
 
 ChordBox.prototype.lightBar = function(string_from, string_to, fret_num) {
+  if (this.position == 1 && this.position_text == 1) {
+    fret_num -= this.position_text;
+  }
+
   string_from_num = this.num_strings - string_from;
   string_to_num = this.num_strings - string_to;
 
