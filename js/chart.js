@@ -30,19 +30,19 @@ var chord_chart = [
     {
       name: "A Major",
       chord: [[1, 0], [2, 2], [3, 2], [4, 2], [5, 0], [6, "x"]],
-      position: 5,
+      position: 0,
       bars: []
     },
     {
       name: "D Minor",
       chord: [[1, 1], [2, 3], [3, 2], [4, 0], [5, "x"], [6, "x"]],
-      position: 5,
+      position: 0,
       bars: []
     },
     {
       name: "E Minor",
       chord: [[1, 0], [2, 0], [3, 0], [4, 2], [5, 2], [6, 0]],
-      position: 5,
+      position: 0,
       bars: []
     },
     {
@@ -126,8 +126,19 @@ chord_shapes = {
   },
   "M7 E": {
     name: "Maj7",
-    chord: [[3, 2], [4, 3], [5, 3]],
+    chord: [[3, 2], [4, 2], [5, 3]],
     bars: [{from_string: 6, to_string: 1, fret: 1}]
+  },
+  "dim E": {
+    name: "dim",
+    chord: [[1, "x"], [3, 2], [5, "x"], [6, 2]],
+    position_text: 1,
+    bars: [{from_string: 4, to_string: 2, fret: 1}]
+  },
+  "m7b5 E": {
+    name: "m7b5",
+    chord: [[1, "x"], [2, 1], [3, 2], [4, 2], [5, "x"], [6, 2]],
+    position_text: 1
   },
   "sus4 E": {
     name: "sus4",
@@ -152,42 +163,67 @@ chord_shapes = {
   "m A": {
     name: "Minor",
     chord: [[2, 2], [3, 3], [4, 3], [6, "x"]],
-    bars: [{from_string: 6, to_string: 1, fret: 1}]
+    bars: [{from_string: 5, to_string: 1, fret: 1}]
   },
   "7 A": {
     name: "7",
     chord: [[2, 3], [4, 3], [6, "x"]],
-    bars: [{from_string: 6, to_string: 1, fret: 1}]
+    bars: [{from_string: 5, to_string: 1, fret: 1}]
   },
   "m7 A": {
     name: "m7",
     chord: [[2, 2], [4, 3], [6, "x"]],
-    bars: [{from_string: 6, to_string: 1, fret: 1}]
+    bars: [{from_string: 5, to_string: 1, fret: 1}]
+  },
+  "m7b5 A": {
+    name: "m7b5",
+    chord: [[2, 2], [4, 2], [6, "x"]],
+    bars: [{from_string: 5, to_string: 3, fret: 1}]
+  },
+  "dim A": {
+    name: "dim",
+    chord: [[1, "x"], [2, 3], [3, 1], [4, 3], [5, 2], [6, "x"]],
+    position_text: 1
   },
   "M7 A": {
     name: "Maj7",
     chord: [[2, 3], [3, 2], [4, 3], [6, "x"]],
-    bars: [{from_string: 6, to_string: 1, fret: 1}]
+    bars: [{from_string: 5, to_string: 1, fret: 1}]
+  },
+  "sus2 A": {
+    name: "sus2",
+    chord: [[3, 3], [4, 3], [6, "x"]],
+    bars: [{from_string: 5, to_string: 1, fret: 1}]
   },
   "sus4 A": {
     name: "sus4",
-    chord: [[2, 3], [3, 3], [4, 4], [6, "x"]],
-    bars: [{from_string: 6, to_string: 1, fret: 1}]
+    chord: [[2, 4], [3, 3], [4, 3], [6, "x"]],
+    bars: [{from_string: 5, to_string: 1, fret: 1}]
   },
   "7sus4 A": {
     name: "7sus4",
-    chord: [[2, 3], [4, 4], [6, "x"]],
-    bars: [{from_string: 6, to_string: 1, fret: 1}]
+    chord: [[2, 4], [4, 3], [6, "x"]],
+    bars: [{from_string: 5, to_string: 1, fret: 1}]
   },
   "9 A": {
     name: "9",
     chord: [[1, "x"], [2, 2], [3, 2], [4, 1], [5, 2], [6, "x"]],
     position_text: 1
   },
+  "7b9 A": {
+    name: "7b9",
+    chord: [[1, "x"], [2, 1], [3, 2], [4, 1], [5, 2], [6, "x"]],
+    position_text: 1
+  },
+  "7#9 A": {
+    name: "7#9",
+    chord: [[1, "x"], [2, 3], [3, 2], [4, 1], [5, 2], [6, "x"]],
+    position_text: 1
+  },
   "13 A": {
     name: "13",
-    chord: [[3, 2], [4, 3], [5, 3]],
-    bars: [{from_string: 6, to_string: 1, fret: 1}]
+    chord: [[1, 4], [2, 4], [3, 2], [4, 4], [5, 2], [6, "x"]],
+    position_text: 1
   },
 };
 
