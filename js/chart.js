@@ -72,7 +72,7 @@ var chord_chart = [
     },
     {
       name: "E7",
-      chord: [[1, 0], [2, 3], [3, 1], [4, 2], [5, 2], [6, 0]],
+      chord: [[1, 0], [2, 3], [3, 1], [4, 0], [5, 2], [6, 0]],
       position: 0,
       bars: []
     },
@@ -90,7 +90,7 @@ var chord_chart = [
     },
     {
       name: "Dm7",
-      chord: [[1, 1], [2, 1], [3, 3], [4, 0], [5, "x"], [6, "x"]],
+      chord: [[1, 1], [2, 1], [3, 2], [4, 0], [5, "x"], [6, "x"]],
       position: 0,
       bars: []
     },
@@ -148,8 +148,9 @@ chord_shapes = {
   },
   "sus4 E": {
     name: "sus4",
-    chord: [[3, 3], [4, 3], [5, 3]],
-    bars: [{from_string: 6, to_string: 1, fret: 1}]
+    chord: [],
+    bars: [{from_string: 6, to_string: 1, fret: 1},
+           {from_string: 5, to_string: 3, fret: 3}]
   },
   "7sus4 E": {
     name: "7sus4",
