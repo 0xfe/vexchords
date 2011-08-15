@@ -112,12 +112,12 @@ var chord_chart = [
 
 chord_shapes = {
   "M E": {
-    name: "Major",
+    name: "Maj",
     chord: [[3, 2], [4, 3], [5, 3]],
     bars: [{from_string: 6, to_string: 1, fret: 1}]
   },
   "m E": {
-    name: "Minor",
+    name: "m",
     chord: [[4, 3], [5, 3]],
     bars: [{from_string: 6, to_string: 1, fret: 1}]
   },
@@ -133,8 +133,7 @@ chord_shapes = {
   },
   "M7 E": {
     name: "Maj7",
-    chord: [[3, 2], [4, 2], [5, 3]],
-    bars: [{from_string: 6, to_string: 1, fret: 1}]
+    chord: [[1, "x"], [2, 1], [3, 2], [4, 2], [5, "x"], [6, 1]]
   },
   "dim E": {
     name: "dim",
@@ -163,12 +162,12 @@ chord_shapes = {
     position_text: 1
   },
   "M A": {
-    name: "Major",
+    name: "Maj",
     chord: [[2, 3], [3, 3], [4, 3], [6, "x"]],
     bars: [{from_string: 5, to_string: 1, fret: 1}]
   },
   "m A": {
-    name: "Minor",
+    name: "m",
     chord: [[2, 2], [3, 3], [4, 3], [6, "x"]],
     bars: [{from_string: 5, to_string: 1, fret: 1}]
   },

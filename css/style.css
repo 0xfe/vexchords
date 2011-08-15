@@ -6,11 +6,12 @@ body {
   margin: auto 0px;
 }
 
-a { text-decoration: none; color: green; padding-bottom: 3px; border-bottom: dotted green 2px }
-a:link {text-decoration: none; color: green}
-a:visited {text-decoration: none; color: green}
+a { text-decoration: none; color: black;
+    padding-bottom: 3px; border-bottom: dotted black 1px }
+a:link {text-decoration: none; color: black}
+a:visited {text-decoration: none; color: black}
 a:active {text-decoration: none; color: #003300}
-a:hover {text-decoration: none; color: #003300}
+a:hover {text-decoration: none; color: green}
 
 #wrapper {
   font-size: 18px;
@@ -53,16 +54,16 @@ h1 {
 .section .description {
   color: #444444;
   font-family: "Marvel", cursive;
-  /* font-family: 'Swanky and Moo Moo', cursive;*/
   font-size: 22px;
 }
 
 .topbar {
   float: right;
-  padding: 8px;
-  background: #dfd;
-  border-bottom: solid green;
-  border-left: solid green;
+  font-family: "Marvel", cursive;
+  padding: 5px;
+  padding-left: 8px;
+  border-bottom: dotted green 1px;
+  border-left: dotted green 1px;
 }
 
 .topbar a { border: solid green 0px; }
