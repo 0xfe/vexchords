@@ -12,7 +12,7 @@ var chord_chart = [
     chords: [
     {
       name: "C Major",
-      chord: [[1, 0], [2, 1], [3, 0], [4, 3], [5, 4]],
+      chord: [[1, 0], [2, 1], [3, 0], [4, 2], [5, 3]],
       position: 0,
       bars: []
     },
