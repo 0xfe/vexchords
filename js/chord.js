@@ -143,9 +143,6 @@ ChordBox.prototype.lightUp = function(string_num, fret_num) {
       fret_num -= shift_position;
   }
  
-  console.log(this.metrics.font_size);
-  console.log(this.fret_spacing);
-
   var x = this.x + (this.spacing * string_num);
   var y = this.y + (this.fret_spacing * (fret_num)) ;
 
