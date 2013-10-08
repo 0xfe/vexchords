@@ -31,7 +31,7 @@ ChordBox = function(paper, x, y, width, height) {
     circle_radius: this.width / 28,
     text_shift_x: this.width / 29,
     text_shift_y: this.height / 29,
-    font_size: this.width / 9,
+    font_size: Math.ceil(this.width / 9),
     bar_shift_x: this.width / 28,
     bridge_stroke_width: Math.ceil(this.height / 36),
     chord_fill: "#444"
@@ -72,9 +72,9 @@ ChordBox.prototype.draw = function() {
 
   // Draw guitar bridge
   if (this.position <= 1) {
-    this.paper.vexLine(this.x, this.y - 1,
+    this.paper.vexLine(this.x, this.y - this.metrics.bridge_stroke_width/2,
                        this.x + (spacing * (this.num_strings - 1)),
-                       this.y - 1).
+                       this.y - this.metrics.bridge_stroke_width/2 ).
       attr("stroke-width", this.metrics.bridge_stroke_width);
   } else {
     // Draw position number
@@ -134,26 +134,28 @@ ChordBox.prototype.lightUp = function(string_num, fret_num) {
   }
 
   var mute = false;
+
   if (fret_num == "x") {
-    fret_num = -this.metrics.bridge_stroke_width/this.fret_spacing;
+    fret_num = 0;
     mute = true;
   } 
   else {
       fret_num -= shift_position;
-      if (fret_num == 0) 
-          fret_num = - this.metrics.bridge_stroke_width/(2*this.fret_spacing);
-  
-      fret_num -= (1 / 2);
   }
+ 
+  console.log(this.metrics.font_size);
+  console.log(this.fret_spacing);
 
   var x = this.x + (this.spacing * string_num);
-  var y = this.y + (this.fret_spacing * (fret_num )) ;
+  var y = this.y + (this.fret_spacing * (fret_num)) ;
 
+  if (fret_num == 0) y -= this.metrics.bridge_stroke_width;
+ 
   if (!mute) {
-    var c = this.paper.circle(x, y, this.metrics.circle_radius)
+    var c = this.paper.circle(x, y-Math.floor(this.fret_spacing/2), this.metrics.circle_radius)
     if (fret_num > 0) c.attr("fill", this.metrics.chord_fill);
   } else {
-    c = this.paper.text(x, y, "X").attr("font-size", this.metrics.font_size);
+    c = this.paper.text(x, y-(this.fret_spacing-this.metrics.font_size), "X").attr({"font-size": this.metrics.font_size});
   }
 
   return this;
