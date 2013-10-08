@@ -299,7 +299,7 @@ function createChordElement(chord_struct) {
   chordname.append(chord_struct.name);
 
   var paper = Raphael(chordcanvas[0], 150, 140);
-  var chord = new ChordBox(paper, 30, 30);
+  var chord = new ChordBox(paper, 14, 14,116,116);
 
   chord.setChord(
       chord_struct.chord,
