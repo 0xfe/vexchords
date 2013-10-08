@@ -20,7 +20,7 @@ ChordBox = function(paper, x, y, width, height) {
   this.num_strings = 6;
   this.num_frets = 5;
 
-  this.spacing = this.width / (this.num_strings + 1);
+  this.spacing = this.width / (this.num_strings);
   this.fret_spacing = (this.height)  / (this.num_frets + 2);
 
   // Add room on sides for finger positions on 1. and 6. string
