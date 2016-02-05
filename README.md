@@ -7,16 +7,20 @@
 
 Include the file `js/chord.js`.
 
-    var paper = Raphael(div_element, 150, 140);
-    var chord = new ChordBox(paper, 30, 30);
+```js
+var paper = Raphael(div_element, 150, 140);
+var chord = new ChordBox(paper, 30, 30);
 
-    # Draw an open D7
-    chord.setChord("[[1, 2], [2, 1], [3, 2], [4, 0], [5, "x"], [6, "x"]]")
-    chord.draw()
+# Draw an open D7
+chord.setChord("[[1, 2], [2, 1], [3, 2], [4, 0], [5, "x"], [6, "x"]]")
+chord.draw()
+```
 
 Parameters to setChord:
 
-    setChord(chord, position, bars, position_text)
+```js
+setChord(chord, position, bars, position_text)
+```
 
 * chord:          Array of [string, fret] arrays.
 * position:       Position (fret number) indicator, e.g., fifth position barre.
@@ -25,17 +29,19 @@ Parameters to setChord:
 
 ## More examples
 
-    # Draw a D major barre
-    setChord([[2, 3], [3, 3], [4, 3], [6, "x"]], 5,
-             [{from_string: 5, to_string: 1, fret: 1}])
+```js
+# Draw a D major barre
+setChord([[2, 3], [3, 3], [4, 3], [6, "x"]], 5,
+         [{from_string: 5, to_string: 1, fret: 1}])
 
-    # Draw Esus4
-    setChord([], 0, [{from_string: 6, to_string: 1, fret: 1},
-                     {from_string: 5, to_string: 3, fret: 3}]
+# Draw Esus4
+setChord([], 0, [{from_string: 6, to_string: 1, fret: 1},
+                 {from_string: 5, to_string: 3, fret: 3}]
 
-    # Make it an Fsus4
-    setChord([], 1, [{from_string: 6, to_string: 1, fret: 1},
-                     {from_string: 5, to_string: 3, fret: 3}]
+# Make it an Fsus4
+setChord([], 1, [{from_string: 6, to_string: 1, fret: 1},
+                 {from_string: 5, to_string: 3, fret: 3}]
+```
 
 ## License
 
