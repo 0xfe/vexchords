@@ -1,6 +1,10 @@
-# VexChords - JavaScript Guitar Chord Generation Library
+# VexChords - Javascript Guitar Chord Renderer
 
-VexChords renders SVG guitar chords in your browser.
+VexChords renders guitar chords in your browser.
+
+<p align="center">
+  <img src='https://imgur.com/hG75apH.png' width=500>
+</p>
 
 See demo: http://vexflow.com/vexchords [ [source](https://github.com/0xfe/vexchords/blob/master/static/demo.html) ]
 
