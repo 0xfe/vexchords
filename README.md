@@ -3,7 +3,7 @@
 VexChords renders guitar chords in your browser.
 
 <p align="center">
-  <img src='https://imgur.com/ILSrDNp.png' width=500>
+  <img src='https://imgur.com/17rH4Jd.png' width=500>
 </p>
 
 See demo: http://vexflow.com/vexchords [ [source](https://github.com/0xfe/vexchords/blob/master/static/demo.html) ]
