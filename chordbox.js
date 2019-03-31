@@ -23,10 +23,12 @@ class ChordBox {
         showTuning: true,
         defaultColor: '#666',
         bgColor: '#fff',
+        labelColor: '#fff',
         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
         fontSize: undefined,
         fontStyle: 'light',
         fontWeight: '100',
+        labelWeight: '100',
       },
       ...params,
     };
@@ -62,7 +64,8 @@ class ChordBox {
     this.y += this.fretSpacing;
 
     this.metrics = {
-      circleRadius: this.width / 22,
+      circleRadius: this.width / 20,
+      barreRadius: this.width / 25,
       fontSize: this.params.fontSize || Math.ceil(this.width / 8),
       barShiftX: this.width / 28,
       bridgeStrokeWidth: Math.ceil(this.height / 36),
@@ -165,7 +168,12 @@ class ChordBox {
 
     // Draw chord
     for (let i = 0; i < this.chord.length; i += 1) {
-      this.lightUp(this.chord[i][0], this.chord[i][1]);
+      // Light up string, fret, and optional label.
+      this.lightUp({
+        string: this.chord[i][0],
+        fret: this.chord[i][1],
+        label: this.chord.length > 2 ? this.chord[i][2] : undefined,
+      });
     }
 
     // Draw barres
@@ -174,28 +182,17 @@ class ChordBox {
     }
   }
 
-  lightUp(stringNum, fretNum) {
-    const sn = this.numStrings - stringNum;
-    let fn = fretNum;
+  lightUp({ string, fret, label }) {
+    const stringNum = this.numStrings - string;
+    const shiftPosition = this.position === 1 && this.positionText === 1 ? this.positionText : 0;
 
-    let shiftPosition = 0;
-    if (this.position === 1 && this.positionText === 1) {
-      shiftPosition = this.positionText;
-    }
+    const mute = fret === 'x';
+    const fretNum = fret === 'x' ? 0 : fret - shiftPosition;
 
-    let mute = false;
+    const x = this.x + this.spacing * stringNum;
+    let y = this.y + this.fretSpacing * fretNum;
 
-    if (fretNum === 'x') {
-      fn = 0;
-      mute = true;
-    } else {
-      fn -= shiftPosition;
-    }
-
-    const x = this.x + this.spacing * sn;
-    let y = this.y + this.fretSpacing * fn;
-
-    if (fn === 0) {
+    if (fretNum === 0) {
       y -= this.metrics.bridgeStrokeWidth;
     }
 
@@ -205,9 +202,23 @@ class ChordBox {
         .move(x, y - this.fretSpacing / 2)
         .radius(this.metrics.circleRadius)
         .stroke({ color: this.params.strokeColor, width: this.params.strokeWidth })
-        .fill(fn > 0 ? this.params.strokeColor : this.params.bgColor);
+        .fill(fretNum > 0 ? this.params.strokeColor : this.params.bgColor);
     } else {
       this.drawText(x, y - this.fretSpacing, 'X');
+    }
+
+    if (label) {
+      const fontSize = this.metrics.fontSize * 0.55;
+      const textYShift = fontSize * 0.66;
+      this.drawText(x, y - this.fretSpacing / 2 - textYShift, label, {
+        weight: this.params.labelWeight,
+        size: fontSize,
+      })
+        .stroke({
+          width: 0.7,
+          color: fretNum !== 0 ? this.params.labelColor : this.params.strokeColor,
+        })
+        .fill(fretNum !== 0 ? this.params.labelColor : this.params.strokeColor);
     }
 
     return this;
@@ -231,7 +242,7 @@ class ChordBox {
     this.canvas
       .rect(xTo - x, yTo - y)
       .move(x, y)
-      .radius(this.metrics.circleRadius)
+      .radius(this.metrics.barreRadius)
       .fill(this.params.strokeColor);
 
     return this;

@@ -36,22 +36,24 @@ const chord = new ChordBox('#selector', {
   textColor: '#666',    // text color (overrides defaultColor)
   stringColor: '#666',  // string color (overrides defaultColor)
   fretColor: '#666',    // fret color (overrides defaultColor)
+  labelColor: '#666',   // label color (overrides defaultColor)
 
   fretWidth: 1,         // fret width
   stringWidth: 1,       // string width
 
   fontFamily, fontSize, fontWeight, fontStyle, // font settings
+  labelWeight,          // weight of label font
 })
 
 chord.draw(({
-  // array of [string, fret]
+  // array of [string, fret, label (optional)]
   chord: [
     [1, 2],
     [2, 1],
     [3, 2],
     [4, 0],    // fret 0 = open string
     [5, 'x'],  // fret x = muted string
-    [6, 'x']
+    [6, 'x'],
     ],
 
   // optional: position marker
@@ -59,8 +61,8 @@ chord.draw(({
 
   // optional: barres for barre chords
   barres: [
-    { fromString: 6, toString: 1, fret: 1 }
-    { fromString: 5, toString: 3, fret: 3 }
+    { fromString: 6, toString: 1, fret: 1 },
+    { fromString: 5, toString: 3, fret: 3 },
   ],
 
   // optional: tuning keys
