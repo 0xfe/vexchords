@@ -58,7 +58,7 @@ chord.draw(({
   position: 5, // start render at fret 5
 
   // optional: barres for barre chords
-  bars: [
+  barres: [
     { fromString: 6, toString: 1, fret: 1 }
     { fromString: 5, toString: 3, fret: 3 }
   ],
@@ -106,7 +106,7 @@ vexchords.draw(
   {
     chord: [[2, 3], [3, 3], [4, 3], [6, 'x']],
     position: 5,
-    bars: [{ fromString: 5, toString: 1, fret: 1 }]
+    barres: [{ fromString: 5, toString: 1, fret: 1 }]
   },
   { strokeColor: '#8a8' }
 );
@@ -117,7 +117,7 @@ vexchords.draw(
   {
     chord: [[1, 0], [2, 0], [6, 0]],
     position: 0,
-    bars: [{ fromString: 5, toString: 3, fret: 2 }]
+    barres: [{ fromString: 5, toString: 3, fret: 2 }]
   },
   { bridgeColor: '#8a8', textColor: '#8a8' }
 );
@@ -128,7 +128,7 @@ vexchords.draw(
   {
     chord: [],
     position: 1,
-    bars: [
+    barres: [
       { fromString: 6, toString: 1, fret: 1 },
       { fromString: 5, toString: 3, fret: 3 }
     ]
