@@ -2,7 +2,7 @@
 
 VexChords renders SVG guitar chords in your browser.
 
-See demo: https://vexflow.com/vexchords [source](https://github.com/0xfe/vexchords/blob/master/static/demo.html)
+See demo: https://vexflow.com/vexchords [ [source](https://github.com/0xfe/vexchords/blob/master/static/demo.html) ]
 
 ## Install
 
@@ -140,6 +140,9 @@ vexchords.draw(
 ```bash
 $ npm i
 $ npm start
+
+# Publish: first update package version in package.json
+$ npm publish
 ```
 
 ## License
