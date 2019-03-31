@@ -5,11 +5,16 @@
 
 import { SVG } from '@svgdotjs/svg.js';
 
+// ChordBox implements the rendering logic for the chord
+// diagrams.
 class ChordBox {
+  // sel can be a selector or an element.
   constructor(sel, params) {
     this.sel = sel;
     this.params = {
       ...{
+        numStrings: 6,
+        numFrets: 5,
         x: 0,
         y: 0,
         width: 100,
@@ -26,6 +31,7 @@ class ChordBox {
       ...params,
     };
 
+    // Setup defaults if not specifically overridden
     ['bridgeColor', 'stringColor', 'fretColor', 'strokeColor', 'textColor'].forEach((param) => {
       this.params[param] = this.params[param] || this.params.defaultColor;
     });
@@ -34,23 +40,19 @@ class ChordBox {
       this.params[param] = this.params[param] || this.params.strokeWidth;
     });
 
-    this.x = this.params.x;
-    this.y = this.params.y;
-    this.width = this.params.width || 100;
-    this.height = this.params.height || 100;
-
+    // Create canvas and add it to the DOM
     this.canvas = SVG()
       .addTo(sel)
-      .size(this.width, this.height);
+      .size(this.params.width, this.params.height);
 
     // Size and shift board
-    this.width -= this.width * 0.15;
-    this.height -= this.height * 0.15;
-    this.x += this.width * 0.15;
-    this.y += this.height * 0.15;
+    this.width = this.params.width * 0.75;
+    this.height = this.params.height * 0.75;
+    this.x = this.params.x + this.params.width * 0.15;
+    this.y = this.params.y + this.params.height * 0.15;
 
-    this.numStrings = 6;
-    this.numFrets = 5;
+    this.numStrings = this.params.numStrings;
+    this.numFrets = this.params.numFrets;
 
     this.spacing = this.width / this.numStrings;
     this.fretSpacing = this.height / (this.numFrets + 2);
@@ -126,11 +128,12 @@ class ChordBox {
 
     // Draw guitar bridge
     if (this.position <= 1) {
-      this.drawLine(this.x, this.y - this.metrics.bridgeStrokeWidth / 2, this.x + spacing * (this.numStrings - 1), this.y - this.metrics.bridgeStrokeWidth / 2)
-        .stroke({
-          width: this.metrics.bridgeStrokeWidth,
-          color: this.params.bridgeColor,
-        })
+      const fromX = this.x;
+      const fromY = this.y - this.metrics.bridgeStrokeWidth;
+      this.canvas
+        .rect(this.x + spacing * (this.numStrings - 1) - fromX, this.y - fromY)
+        .move(fromX, fromY)
+        .stroke({ width: 0 })
         .fill(this.params.bridgeColor);
     } else {
       // Draw position number
@@ -155,7 +158,7 @@ class ChordBox {
 
     // Draw tuning keys
     if (this.params.showTuning && this.tuning.length !== 0) {
-      for (let i = 0; i < this.tuning.length; i += 1) {
+      for (let i = 0; i < Math.min(this.numStrings, this.tuning.length); i += 1) {
         this.drawText(this.x + this.spacing * i, this.y + this.numFrets * this.fretSpacing + this.fretSpacing / 12, this.tuning[i]);
       }
     }

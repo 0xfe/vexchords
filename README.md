@@ -25,6 +25,9 @@ const chord = new ChordBox('#selector', {
   // Customizations (all optional, defaults shown)
   width: 100,           // canvas width
   height: 120,          // canvas height
+
+  numStrings: 6,        // number of strings (e.g., 4 for bass)
+  numFrets: 5,          // number of frets (e.g., 7 for stretch chords)
   showTuning: true,     // show tuning keys
 
   defaultColor: '#666', // default color
