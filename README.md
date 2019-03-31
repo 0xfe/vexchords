@@ -1,46 +1,145 @@
-# Vex Chords - JavaScript Guitar Chord Generation Library
+# VexChords - JavaScript Guitar Chord Generation Library
 
-* Demo at: http://vexflow.com/vexchords
-* Requires Raphael JS (http://raphaeljs.com)
+VexChords renders SVG guitar chords in your browser.
+
+See demo: https://vexflow.com/vexchords [source](https://github.com/0xfe/vexchords/blob/master/static/demo.html)
+
+## Install
+
+```
+npm i vexchords
+```
 
 ## Usage
 
-Include the file `js/chord.js`.
+### Using ChordBox
 
-```js
-var paper = Raphael(div_element, 150, 140);
-var chord = new ChordBox(paper, 30, 30);
+```javascript
+import { ChordBox } from 'vexchords';
+
+const chord = new ChordBox('#selector', {
+  // Customizations (all optional, defaults shown)
+  width: 100,           // canvas width
+  height: 120,          // canvas height
+  showTuning: true,     // show tuning keys
+
+  defaultColor: '#666', // default color
+  bgColor: '#FFF',      // background color
+  strokeColor: '#666',  // stroke color (overrides defaultColor)
+  textColor: '#666',    // text color (overrides defaultColor)
+  stringColor: '#666',  // string color (overrides defaultColor)
+  fretColor: '#666',    // fret color (overrides defaultColor)
+
+  fretWidth: 1,         // fret width
+  stringWidth: 1,       // string width
+
+  fontFamily, fontSize, fontWeight, fontStyle, // font settings
+})
+
+chord.draw(({
+  // array of [string, fret]
+  chord: [
+    [1, 2],
+    [2, 1],
+    [3, 2],
+    [4, 0],    // fret 0 = open string
+    [5, 'x'],  // fret x = muted string
+    [6, 'x']
+    ],
+
+  // optional: position marker
+  position: 5, // start render at fret 5
+
+  // optional: barres for barre chords
+  bars: [
+    { fromString: 6, toString: 1, fret: 1 }
+    { fromString: 5, toString: 3, fret: 3 }
+  ],
+
+  // optional: tuning keys
+  tuning: ['E', 'A', 'D', 'G', 'B', 'E'],
+})
+```
+
+### Using the `draw` helper
+
+```javascript
+import { draw } from 'vexchords';
 
 // Draw an open D7
-chord.setChord([[1, 2], [2, 1], [3, 2], [4, 0], [5, "x"], [6, "x"]])
-chord.draw()
+vexchords.draw('#selector', {
+  chord: [[1, 2], [2, 1], [3, 2], [4, 0], [5, 'x'], [6, 'x']]
+});
 ```
 
-Parameters to setChord:
+### Examples
 
-```js
-setChord(chord, position, bars, position_text)
+```javascript
+import * as vexchords from 'vexchords';
+
+const sel = '#vexchords';
+
+// Draw an open D7
+vexchords.draw(sel, {
+  chord: [[1, 2], [2, 1], [3, 2], [4, 0], [5, 'x'], [6, 'x']]
+});
+
+// Customize size and default color
+vexchords.draw(
+  sel,
+  {
+    chord: [[1, 2], [2, 1], [3, 2], [4, 0], [5, 'x'], [6, 'x']]
+  },
+  { width: 200, height: 240, defaultColor: '#745' }
+);
+
+// Set color of circles and bars only
+vexchords.draw(
+  sel,
+  {
+    chord: [[2, 3], [3, 3], [4, 3], [6, 'x']],
+    position: 5,
+    bars: [{ fromString: 5, toString: 1, fret: 1 }]
+  },
+  { strokeColor: '#8a8' }
+);
+
+// Set colors of bridge and text only
+vexchords.draw(
+  sel,
+  {
+    chord: [[1, 0], [2, 0], [6, 0]],
+    position: 0,
+    bars: [{ fromString: 5, toString: 3, fret: 2 }]
+  },
+  { bridgeColor: '#8a8', textColor: '#8a8' }
+);
+
+// Tiny chords, don't show tuning keys
+vexchords.draw(
+  sel,
+  {
+    chord: [],
+    position: 1,
+    bars: [
+      { fromString: 6, toString: 1, fret: 1 },
+      { fromString: 5, toString: 3, fret: 3 }
+    ]
+  },
+  {
+    width: 30,
+    height: 40,
+    strokeColor: '#745',
+    showTuning: false
+  }
+);
 ```
 
-* chord:          Array of [string, fret] arrays.
-* position:       Position (fret number) indicator, e.g., fifth position barre.
-* bars:           Barres to draw. Array of struct: {from_string: 5, to_string: 1, fret: 1}
-* position_text:  Alternate text at position indicator.
+## Hacking on this repo
 
-## More examples
-
-```js
-# Draw a D major barre
-setChord([[2, 3], [3, 3], [4, 3], [6, "x"]], 5,
-         [{from_string: 5, to_string: 1, fret: 1}])
-
-# Draw Esus4
-setChord([], 0, [{from_string: 6, to_string: 1, fret: 1},
-                 {from_string: 5, to_string: 3, fret: 3}]
-
-# Make it an Fsus4
-setChord([], 1, [{from_string: 6, to_string: 1, fret: 1},
-                 {from_string: 5, to_string: 3, fret: 3}]
+```bash
+$ npm i
+$ npm start
 ```
 
 ## License

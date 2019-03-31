@@ -7,3 +7,4 @@ ruby_sess.*
 .class
 # except foo.o which is hand maintained
 !foo.o
+node_modules
