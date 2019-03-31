@@ -152,6 +152,13 @@ $ npm start
 $ npm publish
 ```
 
+## Upload demo
+
+```bash
+$ gcloud config set account xxx@gmail.com
+$ ./upload.sh
+```
+
 ## License
 
 Copyright (c) 2010 Mohit Muthanna Cheppudira
