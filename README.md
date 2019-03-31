@@ -71,7 +71,7 @@ chord.draw(({
 import { draw } from 'vexchords';
 
 // Draw an open D7
-vexchords.draw('#selector', {
+draw('#selector', {
   chord: [[1, 2], [2, 1], [3, 2], [4, 0], [5, 'x'], [6, 'x']]
 });
 ```
