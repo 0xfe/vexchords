@@ -50,18 +50,16 @@ class ChordBox {
     // Size and shift board
     this.width = this.params.width * 0.75;
     this.height = this.params.height * 0.75;
-    this.x = this.params.x + this.params.width * 0.15;
-    this.y = this.params.y + this.params.height * 0.15;
 
+    // Initialize scaled-spacing
     this.numStrings = this.params.numStrings;
     this.numFrets = this.params.numFrets;
-
     this.spacing = this.width / this.numStrings;
     this.fretSpacing = this.height / (this.numFrets + 2);
 
     // Add room on sides for finger positions on 1. and 6. string
-    this.x += this.spacing / 2;
-    this.y += this.fretSpacing;
+    this.x = this.params.x + this.params.width * 0.15 + this.spacing / 2;
+    this.y = this.params.y + this.params.height * 0.15 + this.fretSpacing;
 
     this.metrics = {
       circleRadius: this.width / 20,
@@ -75,19 +73,8 @@ class ChordBox {
     this.position = 0;
     this.positionText = 0;
     this.chord = [];
-    this.bars = [];
+    this.barres = [];
     this.tuning = ['E', 'A', 'D', 'G', 'B', 'E'];
-  }
-
-  setNumFrets(numFrets) {
-    this.numFrets = numFrets;
-    this.fretSpacing = this.height / (this.numFrets + 1);
-    return this;
-  }
-
-  setPositionText(position) {
-    this.positionText = position;
-    return this;
   }
 
   drawText(x, y, msg, attrs) {
