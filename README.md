@@ -26,6 +26,7 @@ const chord = new ChordBox('#selector', {
   // Customizations (all optional, defaults shown)
   width: 100, // canvas width
   height: 120, // canvas height
+  circleRadius: 5, // circle radius (width / 20 by default)
 
   numStrings: 6, // number of strings (e.g., 4 for bass)
   numFrets: 5, // number of frets (e.g., 7 for stretch chords)
