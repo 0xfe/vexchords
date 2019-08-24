@@ -187,7 +187,7 @@ class ChordBox {
       this.canvas
         .circle()
         .move(x, y - this.fretSpacing / 2)
-        .radius(this.metrics.circleRadius)
+        .radius(this.params.circleRadius || this.metrics.circleRadius)
         .stroke({ color: this.params.strokeColor, width: this.params.strokeWidth })
         .fill(fretNum > 0 ? this.params.strokeColor : this.params.bgColor);
     } else {
