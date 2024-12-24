@@ -2,11 +2,18 @@
   "name": "vexchords",
   "version": "1.2.0",
   "description": "Javascript Chord Charts",
-  "main": "index.js",
+  "type": "module",
+  "module": "dist/vexchords.js",
+  "main": "dist/vexchords.udm.cjs",
+  "exports": {
+    "import": "./dist/vexchords.js",
+    "require": "./dist/vexchords.udm.cjs"
+  },
   "scripts": {
-    "start": "webpack-dev-server --port 8203 --disable-host-check --env.NODE_ENV=development --env.TAG_NAME=dev --mode development --config webpack.config.js",
-    "build": "npx webpack --env.NODE_ENV=production --progress --mode production",
-    "clean": "rm -rf ./dist/*"
+    "start": "vite",
+    "build": "vite build",
+    "build:demo": "vite build --mode development",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -24,26 +31,12 @@
   },
   "homepage": "https://github.com/0xfe/vexchords#readme",
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
-    "babel": "^6.23.0",
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^10.0.1",
-    "babel-loader": "^8.0.5",
-    "copy-webpack-plugin": "^5.0.2",
-    "css-loader": "^2.1.1",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-loader": "^2.1.2",
-    "eslint-plugin-import": "^2.16.0",
-    "style-loader": "^0.23.1",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "^3.2.1",
-    "webpack-merge": "^4.2.1",
-    "write-file-webpack-plugin": "^4.5.0"
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "globals": "^15.14.0",
+    "vite": "^6.0.5"
   },
   "dependencies": {
-    "@svgdotjs/svg.js": "^3.0.12"
+    "@svgdotjs/svg.js": "^3.2.4"
   }
 }
