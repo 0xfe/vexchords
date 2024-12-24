@@ -94,7 +94,7 @@ class ChordBox {
       .fill(this.params.textColor)
       .font(textAttrs);
 
-    return text.move(x - text.length() / 2, y);
+    return text.center(x, y);
   }
 
   drawLine(x, y, newX, newY) {
@@ -127,7 +127,7 @@ class ChordBox {
         .fill(this.params.bridgeColor);
     } else {
       // Draw position number
-      this.drawText(this.x - this.spacing / 2 - this.spacing * 0.1, this.y + this.fretSpacing * this.positionText, this.position);
+      this.drawText(this.x - this.spacing / 3 - this.metrics.fontSize / 2, this.y + this.fretSpacing * this.positionText + this.fretSpacing / 2, this.position);
     }
 
     // Draw strings
@@ -149,7 +149,7 @@ class ChordBox {
     // Draw tuning keys
     if (this.params.showTuning && this.tuning.length !== 0) {
       for (let i = 0; i < Math.min(this.numStrings, this.tuning.length); i += 1) {
-        this.drawText(this.x + this.spacing * i, this.y + this.numFrets * this.fretSpacing + this.fretSpacing / 12, this.tuning[i]);
+        this.drawText(this.x + this.spacing * i, this.y + this.numFrets * this.fretSpacing + this.metrics.fontSize * .66, this.tuning[i]);
       }
     }
 
@@ -210,8 +210,7 @@ class ChordBox {
 
     if (label) {
       const fontSize = this.metrics.fontSize * 0.55;
-      const textYShift = fontSize * 0.66;
-      this.drawText(x, y - this.fretSpacing / 2 - textYShift, label, {
+      this.drawText(x, y - this.fretSpacing / 2, label, {
         weight: this.params.labelWeight,
         size: fontSize,
       })
