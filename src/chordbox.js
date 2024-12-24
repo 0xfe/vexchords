@@ -191,7 +191,21 @@ class ChordBox {
         .stroke({ color: this.params.strokeColor, width: this.params.strokeWidth })
         .fill(fretNum > 0 ? this.params.strokeColor : this.params.bgColor);
     } else {
-      this.drawText(x, y - this.fretSpacing, 'X');
+      const origin = {
+        x: x,
+        y: y - this.fretSpacing / 2,
+      }
+      const yOffset = this.params.circleRadius || this.metrics.circleRadius;
+      const xOffset = yOffset * 0.8;
+
+      this.canvas.line(origin.x - xOffset, origin.y - yOffset, x + xOffset, origin.y + yOffset).stroke({
+        width: this.params.strokeWidth,
+        color: this.params.strokeColor,
+      })
+      this.canvas.line(x + xOffset, origin.y - yOffset, x - xOffset, origin.y + yOffset).stroke({
+        width: this.params.strokeWidth,
+        color: this.params.strokeColor,
+      })
     }
 
     if (label) {
