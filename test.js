@@ -80,6 +80,22 @@ draw(
   { height: 140, numFrets: 8, strokeColor: '#8a8' }
 );
 
+// Small position label
+draw(
+  sel,
+  {
+    chord: [[1, 1], [2, 1], [3, 2], [4, 3], [5, 3], [6, 1]],
+    position: 5,
+    barres: [{ fromString: 6, toString: 1, fret: 1 }]
+  },
+  {
+    width: 60,
+    height: 80,
+    showTuning: false,
+    fontSize: 12
+  }
+);
+
 // Big
 draw(
   '#drawing2',
