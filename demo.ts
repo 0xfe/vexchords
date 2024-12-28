@@ -198,7 +198,7 @@ const chordChart = [
   }
 ];
 
-const chords = [];
+const chords: { el: HTMLElement, struct: ReturnType<typeof build> }[] = [];
 
 function createChordElement(chordStruct) {
   const chordbox = $('<div>').addClass('chord');

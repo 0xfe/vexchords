@@ -4,43 +4,98 @@
  */
 
 import { SVG } from '@svgdotjs/svg.js';
+import type { Svg } from '@svgdotjs/svg.js';
+
+const defaults = {
+  numStrings: 6,
+  numFrets: 5,
+  x: 0,
+  y: 0,
+  width: 100,
+  height: 120,
+  strokeWidth: 1,
+  showTuning: true,
+  defaultColor: '#666',
+  bgColor: '#fff',
+  labelColor: '#fff',
+  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+  fontStyle: 'light',
+  fontWeight: '100',
+  labelWeight: '100',
+}
+
+export type ChordBoxParams = typeof defaults & {
+  fontSize?: number,
+  circleRadius?: number,
+  bridgeColor: string,
+  stringColor: string,
+  fretColor: string,
+  strokeColor: string,
+  textColor: string,
+  stringWidth: number,
+  fretWidth: number,
+};
+
+type Fret = number | 'x'
+export type Chord = [number, Fret, string?][]
+
+export type Barre = {
+  fromString: number,
+  toString: number,
+  fret: number,
+}
+
+type Tuning = string[]
 
 // ChordBox implements the rendering logic for the chord
 // diagrams.
 class ChordBox {
+  sel: HTMLElement | string
+  params: ChordBoxParams
+  canvas: Svg
+  width: number
+  height: number
+  numStrings: number
+  numFrets: number
+  spacing: number
+  fretSpacing: number
+  metrics: {
+    circleRadius: number,
+    barreRadius: number,
+    fontSize: number,
+    barShiftX: number,
+    bridgeStrokeWidth: number,
+  }
+  position: number
+  positionText: number
+  chord: Chord
+  tuning: Tuning
+  barres: Barre[]
+  x: number
+  y: number
+
   // sel can be a selector or an element.
-  constructor(sel, params) {
+  constructor(sel: HTMLElement | string, params: Partial<ChordBoxParams>) {
     this.sel = sel;
+
+    const defaultColor = params.defaultColor ?? defaults.defaultColor;
+    const strokeWidth = params.strokeWidth ?? defaults.strokeWidth;
+
     this.params = {
-      ...{
-        numStrings: 6,
-        numFrets: 5,
-        x: 0,
-        y: 0,
-        width: 100,
-        height: 120,
-        strokeWidth: 1,
-        showTuning: true,
-        defaultColor: '#666',
-        bgColor: '#fff',
-        labelColor: '#fff',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-        fontSize: undefined,
-        fontStyle: 'light',
-        fontWeight: '100',
-        labelWeight: '100',
-      },
-      ...params,
+      ...defaults,
+
+      // Setup defaults if not specifically overridden
+      bridgeColor: defaultColor,
+      stringColor: defaultColor,
+      fretColor: defaultColor,
+      strokeColor: defaultColor,
+      textColor: defaultColor,
+      stringWidth: strokeWidth,
+      fretWidth: strokeWidth,
+
+      ...params
     };
 
-    // Setup defaults if not specifically overridden
-    ['bridgeColor', 'stringColor', 'fretColor', 'strokeColor', 'textColor'].forEach((param) => {
-      this.params[param] = this.params[param] || this.params.defaultColor;
-    });
-
-    ['stringWidth', 'fretWidth'].forEach((param) => {
-      this.params[param] = this.params[param] || this.params.strokeWidth;
-    });
 
     // Create canvas and add it to the DOM
     this.canvas = SVG()
@@ -77,38 +132,34 @@ class ChordBox {
     this.tuning = ['E', 'A', 'D', 'G', 'B', 'E'];
   }
 
-  drawText(x, y, msg, attrs) {
+  drawText(x: number, y: number, msg: string, attrs: object = {}) {
     const textAttrs = {
-      ...{
-        family: this.params.fontFamily,
-        size: this.metrics.fontSize,
-        style: this.params.fontStyle,
-        weight: this.params.fontWeight,
-      },
-      ...attrs,
+      family: this.params.fontFamily,
+      size: this.metrics.fontSize,
+      style: this.params.fontStyle,
+      weight: this.params.fontWeight,
+      ...attrs
     };
 
     const text = this.canvas
       .text(`${msg}`)
-      .stroke(this.params.textColor)
-      .fill(this.params.textColor)
+      .stroke(this.params.textColor!)
+      .fill(this.params.textColor!)
       .font(textAttrs);
 
     return text.center(x, y);
   }
 
-  drawLine(x, y, newX, newY) {
+  drawLine(x: number, y: number, newX: number, newY: number) {
     return this.canvas.line(0, 0, newX - x, newY - y).move(x, y);
   }
 
-  draw({
-    chord, position, barres, positionText, tuning,
-  }) {
+  draw({ chord, position, barres, positionText, tuning }: { chord: Chord, position?: number, barres?: Barre[], positionText?: number, tuning?: Tuning }) {
     this.chord = chord;
-    this.position = position || 0;
-    this.positionText = positionText || 0;
-    this.barres = barres || [];
-    this.tuning = tuning || ['E', 'A', 'D', 'G', 'B', 'E'];
+    this.position = position ?? 0;
+    this.positionText = positionText ?? 0;
+    this.barres = barres ?? [];
+    this.tuning = tuning ?? ['E', 'A', 'D', 'G', 'B', 'E'];
     if (this.tuning.length === 0) {
       this.fretSpacing = this.height / (this.numFrets + 1);
     }
@@ -124,25 +175,25 @@ class ChordBox {
         .rect(this.x + spacing * (this.numStrings - 1) - fromX + (this.params.strokeWidth / 2), this.y - fromY)
         .move(fromX, fromY)
         .stroke({ width: 0 })
-        .fill(this.params.bridgeColor);
+        .fill(this.params.bridgeColor!);
     } else {
       // Draw position number
-      this.drawText(this.x - this.spacing / 3 - this.metrics.fontSize / 2, this.y + this.fretSpacing * this.positionText + this.fretSpacing / 2, this.position);
+      this.drawText(this.x - this.spacing / 3 - this.metrics.fontSize / 2, this.y + this.fretSpacing * this.positionText + this.fretSpacing / 2, this.position.toString());
     }
 
     // Draw strings
     for (let i = 0; i < this.numStrings; i += 1) {
       this.drawLine(this.x + spacing * i, this.y, this.x + spacing * i, this.y + fretSpacing * this.numFrets).stroke({
-        width: this.params.stringWidth,
-        color: this.params.stringColor,
+        width: this.params.stringWidth!,
+        color: this.params.stringColor!,
       });
     }
 
     // Draw frets
     for (let i = 0; i < this.numFrets + 1; i += 1) {
       this.drawLine(this.x, this.y + fretSpacing * i, this.x + spacing * (this.numStrings - 1), this.y + fretSpacing * i).stroke({
-        width: this.params.fretWidth,
-        color: this.params.fretColor,
+        width: this.params.fretWidth!,
+        color: this.params.fretColor!,
       });
     }
 
@@ -165,11 +216,11 @@ class ChordBox {
 
     // Draw barres
     for (let i = 0; i < this.barres.length; i += 1) {
-      this.lightBar(this.barres[i].fromString, this.barres[i].toString, this.barres[i].fret);
+      this.lightBar(this.barres[i]);
     }
   }
 
-  lightUp({ string, fret, label }) {
+  lightUp({ string, fret, label }: { string: number, fret: Fret, label?: string }) {
     const stringNum = this.numStrings - string;
     const shiftPosition = this.position === 1 && this.positionText === 1 ? this.positionText : 0;
 
@@ -189,7 +240,7 @@ class ChordBox {
         .move(x, y - this.fretSpacing / 2)
         .radius(this.params.circleRadius || this.metrics.circleRadius)
         .stroke({ color: this.params.strokeColor, width: this.params.strokeWidth })
-        .fill(fretNum > 0 ? this.params.strokeColor : this.params.bgColor);
+        .fill(fretNum > 0 ? this.params.strokeColor! : this.params.bgColor);
     } else {
       const origin = {
         x: x,
@@ -218,23 +269,23 @@ class ChordBox {
           width: 0.7,
           color: fretNum !== 0 ? this.params.labelColor : this.params.strokeColor,
         })
-        .fill(fretNum !== 0 ? this.params.labelColor : this.params.strokeColor);
+        .fill(fretNum !== 0 ? this.params.labelColor! : this.params.strokeColor!);
     }
 
     return this;
   }
 
-  lightBar(stringFrom, stringTo, theFretNum) {
-    let fretNum = theFretNum;
+  lightBar({ fromString, toString, fret }: Barre) {
+    let fretNum = fret;
     if (this.position === 1 && this.positionText === 1) {
       fretNum -= this.positionText;
     }
 
-    const stringFromNum = this.numStrings - stringFrom;
-    const stringToNum = this.numStrings - stringTo;
+    const fromStringNum = this.numStrings - fromString;
+    const toStringNum = this.numStrings - toString;
 
-    const x = this.x + this.spacing * stringFromNum - this.metrics.barShiftX;
-    const xTo = this.x + this.spacing * stringToNum + this.metrics.barShiftX;
+    const x = this.x + this.spacing * fromStringNum - this.metrics.barShiftX;
+    const xTo = this.x + this.spacing * toStringNum + this.metrics.barShiftX;
 
     const y = this.y + this.fretSpacing * (fretNum - 1) + this.fretSpacing / 4;
     const yTo = this.y + this.fretSpacing * (fretNum - 1) + (this.fretSpacing / 4) * 3;
@@ -243,7 +294,7 @@ class ChordBox {
       .rect(xTo - x, yTo - y)
       .move(x, y)
       .radius(this.metrics.barreRadius)
-      .fill(this.params.strokeColor);
+      .fill(this.params.strokeColor!);
 
     return this;
   }

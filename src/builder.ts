@@ -3,7 +3,16 @@
  * Mohit Muthanna Cheppudira -- http://0xfe.blogspot.com
  */
 
-const SHAPES = {
+import type { Barre, Chord } from './chordbox'
+
+type Shape = {
+  name: string,
+  chord: Chord,
+  barres?: Barre[],
+  positionText?: number,
+}
+
+const SHAPES: Record<string, Shape> = {
   'M E': {
     name: 'Maj',
     chord: [[3, 2], [4, 3], [5, 3]],
@@ -167,17 +176,15 @@ const POSITIONS = {
   },
 };
 
-function build(key, string, shape) {
-  const theString = string.toUpperCase();
+function build(key: keyof typeof POSITIONS.E, string: string, shape: keyof typeof SHAPES) {
+  const theString = string.toUpperCase() as keyof typeof POSITIONS;
   const position = POSITIONS[theString][key];
   const struct = SHAPES[shape];
 
   return {
+    ...struct,
     name: key + struct.name,
-    chord: struct.chord,
-    position,
-    positionText: struct.positionText,
-    barres: struct.barres,
+    position
   };
 }
 
