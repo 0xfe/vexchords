@@ -6,7 +6,10 @@
 import ChordBox from './chordbox';
 import { POSITIONS, SHAPES, build } from './builder';
 
-function draw(sel, chord, opts) {
+type chordboxParams = ConstructorParameters<typeof ChordBox>
+type drawParams = Parameters<ChordBox['draw']>
+
+function draw(sel: chordboxParams[0], chord: drawParams[0], opts: chordboxParams[1] = {}) {
   return new ChordBox(sel, opts).draw(chord);
 }
 
