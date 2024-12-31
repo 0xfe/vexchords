@@ -118,10 +118,10 @@ class ChordBox {
 
     // Draw guitar bridge
     if (this.position <= 1) {
-      const fromX = this.x;
+      const fromX = this.x - (this.params.strokeWidth / 2);
       const fromY = this.y - this.metrics.bridgeStrokeWidth;
       this.canvas
-        .rect(this.x + spacing * (this.numStrings - 1) - fromX, this.y - fromY)
+        .rect(this.x + spacing * (this.numStrings - 1) - fromX + (this.params.strokeWidth / 2), this.y - fromY)
         .move(fromX, fromY)
         .stroke({ width: 0 })
         .fill(this.params.bridgeColor);
